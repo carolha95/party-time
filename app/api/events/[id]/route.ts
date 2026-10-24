@@ -1,7 +1,11 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { supabaseAdmin } from '@/lib/supabase'
+import { requireAuth } from '@/lib/auth'
 
 export async function GET(_: NextRequest, { params }: { params: Promise<{ id: string }> }) {
+  const auth = await requireAuth()
+  if (auth.error) return auth.error
+
   const { id } = await params
   const db = supabaseAdmin()
   const { data, error } = await db.from('events').select('*').eq('id', id).single()
@@ -11,6 +15,9 @@ export async function GET(_: NextRequest, { params }: { params: Promise<{ id: st
 }
 
 export async function DELETE(_: NextRequest, { params }: { params: Promise<{ id: string }> }) {
+  const auth = await requireAuth()
+  if (auth.error) return auth.error
+
   const { id } = await params
   const db = supabaseAdmin()
   const { error } = await db.from('events').delete().eq('id', id)

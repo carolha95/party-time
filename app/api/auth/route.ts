@@ -1,25 +1,30 @@
-import { NextRequest, NextResponse } from 'next/server'
+import { NextResponse } from 'next/server'
+import { createServerSupabase } from '@/lib/supabase-auth'
 
-export async function POST(request: NextRequest) {
-  const { password } = await request.json()
+export async function GET() {
+  const supabase = await createServerSupabase()
+  const { data: { user } } = await supabase.auth.getUser()
 
-  if (password !== process.env.ADMIN_PASSWORD) {
-    return NextResponse.json({ error: 'Invalid password' }, { status: 401 })
+  if (!user) {
+    return NextResponse.json({ error: 'Not authenticated' }, { status: 401 })
   }
 
-  const response = NextResponse.json({ ok: true })
-  response.cookies.set('admin_session', 'authenticated', {
-    httpOnly: true,
-    secure: process.env.NODE_ENV === 'production',
-    sameSite: 'lax',
-    maxAge: 60 * 60 * 24 * 30, // 30 days
-    path: '/',
+  const { data: profile } = await supabase
+    .from('profiles')
+    .select('role, display_name')
+    .eq('id', user.id)
+    .single()
+
+  return NextResponse.json({
+    id: user.id,
+    email: user.email,
+    role: profile?.role || 'guest',
+    display_name: profile?.display_name || user.email,
   })
-  return response
 }
 
 export async function DELETE() {
-  const response = NextResponse.json({ ok: true })
-  response.cookies.delete('admin_session')
-  return response
+  const supabase = await createServerSupabase()
+  await supabase.auth.signOut()
+  return NextResponse.json({ ok: true })
 }

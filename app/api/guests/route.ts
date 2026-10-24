@@ -1,8 +1,12 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { supabaseAdmin } from '@/lib/supabase'
+import { requireAuth } from '@/lib/auth'
 import { randomUUID } from 'crypto'
 
 export async function POST(request: NextRequest) {
+  const auth = await requireAuth()
+  if (auth.error) return auth.error
+
   const body = await request.json()
   const { event_id, guests } = body
 

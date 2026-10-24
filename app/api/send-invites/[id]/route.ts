@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { supabaseAdmin, type Guest, type Event } from '@/lib/supabase'
 import { twilioClient, twilioFrom } from '@/lib/twilio'
+import { requireAuth } from '@/lib/auth'
 
 function formatDate(dateStr: string) {
   return new Date(dateStr).toLocaleDateString('en-US', {
@@ -12,6 +13,9 @@ function formatDate(dateStr: string) {
 }
 
 export async function POST(request: NextRequest, { params }: { params: Promise<{ id: string }> }) {
+  const auth = await requireAuth()
+  if (auth.error) return auth.error
+
   const { id } = await params
   const body = await request.json().catch(() => ({}))
   const guestIds: string[] | undefined = body.guest_ids

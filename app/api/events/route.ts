@@ -1,7 +1,11 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { supabaseAdmin } from '@/lib/supabase'
+import { requireAuth } from '@/lib/auth'
 
 export async function GET() {
+  const auth = await requireAuth()
+  if (auth.error) return auth.error
+
   const db = supabaseAdmin()
   const { data, error } = await db
     .from('events')
@@ -13,6 +17,9 @@ export async function GET() {
 }
 
 export async function POST(request: NextRequest) {
+  const auth = await requireAuth()
+  if (auth.error) return auth.error
+
   const body = await request.json()
   const { name, date, end_time, location, header_image_url, amazon_wishlist_url } = body
 
