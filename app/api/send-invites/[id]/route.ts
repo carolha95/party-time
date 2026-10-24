@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { supabaseAdmin, type Guest, type Event } from '@/lib/supabase'
-import Telnyx from 'telnyx'
+import { twilioClient, twilioFrom } from '@/lib/twilio'
 
 function formatDate(dateStr: string) {
   return new Date(dateStr).toLocaleDateString('en-US', {
@@ -14,7 +14,7 @@ function formatDate(dateStr: string) {
 export async function POST(request: NextRequest, { params }: { params: Promise<{ id: string }> }) {
   const { id } = await params
   const body = await request.json().catch(() => ({}))
-  const guestIds: string[] | undefined = body.guest_ids // optional: send only to specific guests
+  const guestIds: string[] | undefined = body.guest_ids
 
   const db = supabaseAdmin()
 
@@ -30,26 +30,23 @@ export async function POST(request: NextRequest, { params }: { params: Promise<{
   if (guestIds?.length) {
     query = query.in('id', guestIds)
   } else {
-    query = query.is('invite_sent_at', null) // only unsent by default
+    query = query.is('invite_sent_at', null)
   }
 
   const { data: guests, error: guestError } = await query
   if (guestError) return NextResponse.json({ error: guestError.message }, { status: 500 })
 
-  const telnyx = new Telnyx({ apiKey: process.env.TELNYX_API_KEY! })
+  const client = twilioClient()
+  const from = twilioFrom()
   const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://yourdomain.com'
   const results: { id: string; success: boolean; error?: string }[] = []
 
   for (const guest of (guests as Guest[])) {
     const link = `${baseUrl}/rsvp/${guest.invite_token}`
-    const message = `Hey ${guest.name}! You're invited to ${event.name} on ${formatDate(event.date)}. RSVP here: ${link}`
+    const body = `Party Time: Hey ${guest.name}! You're invited to ${event.name} on ${formatDate(event.date)}. RSVP here: ${link}. Reply STOP to opt out.`
 
     try {
-      await telnyx.messages.send({
-        from: process.env.TELNYX_PHONE_NUMBER!,
-        to: guest.phone,
-        text: message,
-      })
+      await client.messages.create({ from, to: guest.phone, body })
 
       await db
         .from('guests')

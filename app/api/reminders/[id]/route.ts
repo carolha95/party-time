@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { supabaseAdmin, type Guest, type Event } from '@/lib/supabase'
-import Telnyx from 'telnyx'
+import { twilioClient, twilioFrom } from '@/lib/twilio'
 
 function formatDate(dateStr: string) {
   return new Date(dateStr).toLocaleDateString('en-US', {
@@ -13,7 +13,6 @@ function formatDate(dateStr: string) {
 export async function POST(request: NextRequest, { params }: { params: Promise<{ id: string }> }) {
   const { id } = await params
   const body = await request.json().catch(() => ({}))
-  // target: 'non_responders' | 'attending' | 'all'
   const target: string = body.target || 'non_responders'
 
   const db = supabaseAdmin()
@@ -33,23 +32,20 @@ export async function POST(request: NextRequest, { params }: { params: Promise<{
   const { data: guests, error: guestError } = await query
   if (guestError) return NextResponse.json({ error: guestError.message }, { status: 500 })
 
-  const telnyx = new Telnyx({ apiKey: process.env.TELNYX_API_KEY! })
+  const client = twilioClient()
+  const from = twilioFrom()
   const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://yourdomain.com'
   const results: { id: string; success: boolean; error?: string }[] = []
 
   for (const guest of (guests as Guest[])) {
     const link = `${baseUrl}/rsvp/${guest.invite_token}`
-    const message =
+    const msg =
       target === 'attending'
-        ? `Hi ${guest.name}! Just a reminder — ${event.name} is on ${formatDate(event.date)}. See you there! 🎉`
-        : `Hi ${guest.name}! Just a reminder to RSVP for ${event.name} on ${formatDate(event.date)}: ${link}`
+        ? `Party Time: Hi ${guest.name}! Reminder — ${event.name} is on ${formatDate(event.date)}. See you there!`
+        : `Party Time: Hi ${guest.name}! Reminder to RSVP for ${event.name} on ${formatDate(event.date)}: ${link}. Reply STOP to opt out.`
 
     try {
-      await telnyx.messages.send({
-        from: process.env.TELNYX_PHONE_NUMBER!,
-        to: guest.phone,
-        text: message,
-      })
+      await client.messages.create({ from, to: guest.phone, body: msg })
       results.push({ id: guest.id, success: true })
     } catch (err: unknown) {
       results.push({ id: guest.id, success: false, error: (err as Error).message })
