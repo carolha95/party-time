@@ -10,6 +10,10 @@ export interface Event {
   location: string
   header_image_url: string | null
   amazon_wishlist_url: string | null
+  tagline: string | null
+  dress_code: string | null
+  host_note: string | null
+  accent_color: string | null
   created_at: string
 }
 
@@ -22,6 +26,8 @@ export interface Guest {
   rsvp_status: RsvpStatus
   invite_sent_at: string | null
   responded_at: string | null
+  guest_count: number | null
+  rsvp_note: string | null
 }
 
 function getSupabaseUrl() {

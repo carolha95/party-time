@@ -17,7 +17,7 @@ export async function GET(_: NextRequest, { params }: { params: Promise<{ token:
 
 export async function POST(request: NextRequest, { params }: { params: Promise<{ token: string }> }) {
   const { token } = await params
-  const { status } = await request.json()
+  const { status, guest_count, note } = await request.json()
 
   const validStatuses: RsvpStatus[] = ['attending', 'not_attending', 'maybe']
   if (!validStatuses.includes(status)) {
@@ -27,7 +27,12 @@ export async function POST(request: NextRequest, { params }: { params: Promise<{
   const db = supabaseAdmin()
   const { data, error } = await db
     .from('guests')
-    .update({ rsvp_status: status, responded_at: new Date().toISOString() })
+    .update({
+      rsvp_status: status,
+      responded_at: new Date().toISOString(),
+      ...(guest_count !== undefined && { guest_count }),
+      ...(note !== undefined && { rsvp_note: note }),
+    })
     .eq('invite_token', token)
     .select('*, events(*)')
     .single()
