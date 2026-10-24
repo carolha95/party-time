@@ -21,7 +21,7 @@ export default function AdminDashboard() {
   useEffect(() => {
     fetch('/api/events')
       .then((r) => r.json())
-      .then(setEvents)
+      .then((d) => { if (Array.isArray(d)) setEvents(d) })
       .finally(() => setLoading(false))
   }, [])
 
