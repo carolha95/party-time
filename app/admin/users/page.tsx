@@ -190,7 +190,8 @@ export default function UsersPage() {
                   <select
                     value={user.role}
                     onChange={(e) => updateRole(user.id, e.target.value)}
-                    className={`text-xs px-3 py-1.5 rounded-full border-0 cursor-pointer ${ROLE_STYLE[user.role]}`}
+                    className={`text-xs pl-4 pr-7 py-2 rounded-full border-0 cursor-pointer appearance-none bg-[length:12px] bg-[right_8px_center] bg-no-repeat ${ROLE_STYLE[user.role]}`}
+                    style={{ backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12'%3E%3Cpath d='M3 5l3 3 3-3' fill='none' stroke='%239BA3B5' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E")` }}
                   >
                     <option value="guest">Guest</option>
                     <option value="host">Host</option>

@@ -260,7 +260,7 @@ export default function EventDetailPage({ params }: { params: Promise<{ id: stri
                     {g.invite_sent_at && (
                       <span className="text-xs text-[#9BA3B5]">Invited</span>
                     )}
-                    <span className={`text-xs px-3 py-1 rounded-full ${STATUS_COLOR[g.rsvp_status]}`}>
+                    <span className={`text-xs px-4 py-2 rounded-full ${STATUS_COLOR[g.rsvp_status]}`}>
                       {STATUS_LABEL[g.rsvp_status]}
                     </span>
                     <CopyLinkButton token={g.invite_token} />
