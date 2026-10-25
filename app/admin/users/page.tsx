@@ -18,9 +18,9 @@ const ROLE_LABEL: Record<string, string> = {
 }
 
 const ROLE_STYLE: Record<string, string> = {
-  admin: 'bg-[#FBF0EE] text-[#C4826A]',
-  host: 'bg-[#EAF2EA] text-[#5A8C5A]',
-  guest: 'bg-[#F5F0EB] text-[#C4A090]',
+  admin: 'bg-[#EDE6F2] text-[#7C6E8A]',
+  host: 'bg-[#E4EDE7] text-[#6D8B7A]',
+  guest: 'bg-[#E8EAF0] text-[#9BA3B5]',
 }
 
 export default function UsersPage() {
@@ -85,39 +85,39 @@ export default function UsersPage() {
     }
   }
 
-  const inputClass = "w-full px-5 py-3.5 bg-white border border-[#EDE0D6] rounded-xl text-[#3D3530] placeholder-[#C4A090] focus:outline-none focus:ring-2 focus:ring-[#C4826A]/20 focus:border-[#C4826A] transition-colors font-lato font-light"
-  const labelClass = "block text-xs font-lato tracking-widest uppercase text-[#C4826A] mb-2"
+  const inputClass = "w-full px-5 py-3.5 bg-white border border-[#E8EAF0] rounded-xl text-[#1E2330] placeholder-[#9BA3B5] focus:outline-none focus:ring-2 focus:ring-[#7C6E8A]/20 focus:border-[#7C6E8A] transition-colors font-light"
+  const labelClass = "block text-xs tracking-widest uppercase text-[#7C6E8A] mb-2"
 
   return (
-    <div className="min-h-screen bg-[#FAF7F2]">
-      <header className="bg-white/80 backdrop-blur border-b border-[#EDE0D6] px-8 py-5 flex items-center gap-3">
-        <Link href="/admin" className="text-[#C4A090] hover:text-[#C4826A] text-sm font-lato transition-colors">
+    <div className="min-h-screen bg-[#F6F7F9]">
+      <header className="bg-white/80 backdrop-blur border-b border-[#E8EAF0] px-5 sm:px-8 py-4 sm:py-5 flex items-center gap-3">
+        <Link href="/admin" className="text-[#9BA3B5] hover:text-[#1E2330] text-sm transition-colors">
           &larr; Dashboard
         </Link>
-        <span className="text-[#EDE0D6]">/</span>
-        <span className="text-sm text-[#3D3530] font-lato">Users</span>
+        <span className="text-[#E8EAF0]">/</span>
+        <span className="text-sm text-[#1E2330]">Users</span>
       </header>
 
-      <main className="max-w-2xl mx-auto px-6 py-12">
+      <main className="max-w-2xl mx-auto px-5 sm:px-6 py-10 sm:py-12">
         <div className="flex items-end justify-between mb-10">
           <div>
-            <p className="text-[#C4826A] tracking-[0.2em] text-xs uppercase mb-1">Manage</p>
-            <h2 className="font-[family-name:var(--font-playfair)] text-4xl text-[#3D3530]">Users</h2>
+            <p className="text-[#7C6E8A] tracking-[0.2em] text-xs uppercase mb-1">Manage</p>
+            <h2 className="font-[family-name:var(--font-display)] text-4xl text-[#1E2330]">Users</h2>
           </div>
           <button
             onClick={() => { setShowForm(!showForm); setError('') }}
-            className="px-6 py-2.5 bg-[#C4826A] text-white rounded-full text-xs font-lato tracking-widest uppercase hover:bg-[#A6614C] transition-colors"
+            className="px-5 sm:px-6 py-2.5 bg-[#1E2330] text-white rounded-full text-xs tracking-widest uppercase hover:bg-[#3A3F50] transition-colors"
           >
             {showForm ? 'Cancel' : '+ Add User'}
           </button>
         </div>
 
         {message && (
-          <p className="text-sm text-[#5A8C5A] bg-[#EAF2EA] px-5 py-3 rounded-xl font-lato mb-6">{message}</p>
+          <p className="text-sm text-[#6D8B7A] bg-[#E4EDE7] px-5 py-3 rounded-xl mb-6">{message}</p>
         )}
 
         {showForm && (
-          <form onSubmit={createUser} className="bg-white border border-[#EDE0D6] rounded-2xl p-7 mb-8 space-y-5">
+          <form onSubmit={createUser} className="bg-white border border-[#E8EAF0] rounded-2xl p-6 sm:p-7 mb-8 space-y-5">
             <div>
               <label className={labelClass}>Display Name</label>
               <input
@@ -163,11 +163,11 @@ export default function UsersPage() {
                 <option value="admin">Admin</option>
               </select>
             </div>
-            {error && <p className="text-[#C4826A] text-sm font-lato">{error}</p>}
+            {error && <p className="text-[#C47A72] text-sm">{error}</p>}
             <button
               type="submit"
               disabled={saving}
-              className="w-full py-3.5 bg-[#C4826A] text-white rounded-full font-lato font-light tracking-widest text-sm uppercase hover:bg-[#A6614C] disabled:opacity-50 transition-colors"
+              className="w-full py-3.5 bg-[#1E2330] text-white rounded-full font-light tracking-widest text-sm uppercase hover:bg-[#3A3F50] disabled:opacity-50 transition-colors"
             >
               {saving ? 'Creating...' : 'Create User'}
             </button>
@@ -175,22 +175,22 @@ export default function UsersPage() {
         )}
 
         {loading ? (
-          <p className="text-[#C4A090] text-center py-20 font-[family-name:var(--font-playfair)] italic">Loading...</p>
+          <p className="text-[#9BA3B5] text-center py-20 font-[family-name:var(--font-display)] italic">Loading...</p>
         ) : users.length === 0 ? (
-          <p className="text-center py-24 font-[family-name:var(--font-playfair)] text-2xl text-[#C4A090] italic">No users yet</p>
+          <p className="text-center py-24 font-[family-name:var(--font-display)] text-2xl text-[#9BA3B5] italic">No users yet</p>
         ) : (
-          <div className="bg-white border border-[#EDE0D6] rounded-2xl divide-y divide-[#F5EFE9]">
+          <div className="bg-white border border-[#E8EAF0] rounded-2xl divide-y divide-[#F0F1F4]">
             {users.map((user) => (
-              <div key={user.id} className="flex items-center justify-between px-6 py-5">
-                <div>
-                  <p className="font-[family-name:var(--font-playfair)] text-[#3D3530]">{user.display_name}</p>
-                  <p className="text-xs text-[#C4A090] font-lato mt-0.5">{user.email}</p>
+              <div key={user.id} className="flex items-center justify-between px-5 sm:px-6 py-4 sm:py-5">
+                <div className="min-w-0 mr-3">
+                  <p className="font-[family-name:var(--font-display)] text-[#1E2330] truncate">{user.display_name}</p>
+                  <p className="text-xs text-[#9BA3B5] mt-0.5 truncate">{user.email}</p>
                 </div>
-                <div className="flex items-center gap-3">
+                <div className="flex items-center gap-2 sm:gap-3 shrink-0">
                   <select
                     value={user.role}
                     onChange={(e) => updateRole(user.id, e.target.value)}
-                    className={`text-xs px-3 py-1.5 rounded-full font-lato border-0 cursor-pointer ${ROLE_STYLE[user.role]}`}
+                    className={`text-xs px-3 py-1.5 rounded-full border-0 cursor-pointer ${ROLE_STYLE[user.role]}`}
                   >
                     <option value="guest">Guest</option>
                     <option value="host">Host</option>
@@ -198,7 +198,7 @@ export default function UsersPage() {
                   </select>
                   <button
                     onClick={() => deleteUser(user.id, user.email)}
-                    className="text-xs text-[#C4A090] hover:text-[#C4826A] font-lato transition-colors"
+                    className="text-xs text-[#9BA3B5] hover:text-[#C47A72] transition-colors"
                     title="Remove user"
                   >
                     &times;

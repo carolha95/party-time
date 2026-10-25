@@ -1,17 +1,17 @@
 import type { Metadata } from "next";
-import { Playfair_Display, Lato, Hanken_Grotesk } from "next/font/google";
+import { DM_Serif_Display, DM_Sans, Hanken_Grotesk } from "next/font/google";
 import "./globals.css";
 
-const playfair = Playfair_Display({
-  variable: "--font-playfair",
+const dmSerif = DM_Serif_Display({
+  variable: "--font-display",
   subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
+  weight: ["400"],
 });
 
-const lato = Lato({
-  variable: "--font-lato",
+const dmSans = DM_Sans({
+  variable: "--font-sans",
   subsets: ["latin"],
-  weight: ["300", "400", "700"],
+  weight: ["300", "400", "500", "600", "700"],
 });
 
 const hanken = Hanken_Grotesk({
@@ -31,8 +31,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${playfair.variable} ${lato.variable} ${hanken.variable} h-full antialiased`}>
-      <body className="min-h-full flex flex-col font-lato">{children}</body>
+    <html lang="en" className={`${dmSerif.variable} ${dmSans.variable} ${hanken.variable} h-full antialiased`}>
+      <body className="min-h-full flex flex-col">{children}</body>
     </html>
   );
 }

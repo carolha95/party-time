@@ -5,10 +5,9 @@ import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import Image from 'next/image'
 
-// Converts "3:00 PM" → "15:00" for Date parsing
 function to24h(time: string): string {
   const match = time.match(/^(\d{1,2}):(\d{2})\s*(AM|PM)$/i)
-  if (!match) return time // already 24h or unrecognized, pass through
+  if (!match) return time
   let hours = parseInt(match[1])
   const minutes = match[2]
   const meridiem = match[3].toUpperCase()
@@ -67,7 +66,6 @@ export default function NewEventPage() {
     setLoading(true)
     setError('')
 
-    // Combine date + start_time into an ISO timestamp
     const date = form.start_time
       ? new Date(`${form.date}T${to24h(form.start_time)}`).toISOString()
       : new Date(form.date).toISOString()
@@ -88,22 +86,22 @@ export default function NewEventPage() {
     }
   }
 
-  const inputClass = "w-full px-5 py-3.5 bg-white border border-[#EDE0D6] rounded-xl text-[#3D3530] placeholder-[#C4A090] focus:outline-none focus:ring-2 focus:ring-[#C4826A]/20 focus:border-[#C4826A] transition-colors font-lato font-light"
-  const labelClass = "block text-xs font-lato tracking-widest uppercase text-[#C4826A] mb-2"
+  const inputClass = "w-full px-5 py-3.5 bg-white border border-[#E8EAF0] rounded-xl text-[#1E2330] placeholder-[#9BA3B5] focus:outline-none focus:ring-2 focus:ring-[#7C6E8A]/20 focus:border-[#7C6E8A] transition-colors font-light"
+  const labelClass = "block text-xs tracking-widest uppercase text-[#7C6E8A] mb-2"
 
   return (
-    <div className="min-h-screen bg-[#FAF7F2]">
-      <header className="bg-white/80 backdrop-blur border-b border-[#EDE0D6] px-8 py-5 flex items-center gap-3">
-        <Link href="/admin" className="text-[#C4A090] hover:text-[#C4826A] text-sm font-lato transition-colors">
-          ← Events
+    <div className="min-h-screen bg-[#F6F7F9]">
+      <header className="bg-white/80 backdrop-blur border-b border-[#E8EAF0] px-5 sm:px-8 py-4 sm:py-5 flex items-center gap-3">
+        <Link href="/admin" className="text-[#9BA3B5] hover:text-[#1E2330] text-sm transition-colors">
+          &larr; Events
         </Link>
-        <span className="text-[#EDE0D6]">/</span>
-        <span className="text-sm text-[#3D3530] font-lato">New Event</span>
+        <span className="text-[#E8EAF0]">/</span>
+        <span className="text-sm text-[#1E2330]">New Event</span>
       </header>
 
-      <main className="max-w-lg mx-auto px-6 py-14">
-        <p className="text-[#C4826A] tracking-[0.2em] text-xs uppercase mb-2">Plan something beautiful</p>
-        <h2 className="font-[family-name:var(--font-playfair)] text-4xl text-[#3D3530] mb-10">New Event</h2>
+      <main className="max-w-lg mx-auto px-5 sm:px-6 py-10 sm:py-14">
+        <p className="text-[#7C6E8A] tracking-[0.2em] text-xs uppercase mb-2">Plan something beautiful</p>
+        <h2 className="font-[family-name:var(--font-display)] text-4xl text-[#1E2330] mb-10">New Event</h2>
 
         <form onSubmit={handleSubmit} className="space-y-6">
           <div>
@@ -165,11 +163,10 @@ export default function NewEventPage() {
             />
           </div>
 
-          {/* Header image upload */}
           <div>
             <label className={labelClass}>Header Image</label>
-            <p className="text-xs text-[#C4A090] font-lato mb-3">
-              Best at <span className="text-[#C4826A]">1600 × 600 px</span> (landscape, 8:3 ratio) —
+            <p className="text-xs text-[#9BA3B5] mb-3">
+              Best at <span className="text-[#7C6E8A]">1600 x 600 px</span> (landscape, 8:3 ratio) &mdash;
               at least 1200 px wide. JPEG or PNG.
             </p>
 
@@ -192,14 +189,14 @@ export default function NewEventPage() {
                   <button
                     type="button"
                     onClick={() => fileRef.current?.click()}
-                    className="px-4 py-2 bg-white text-[#3D3530] rounded-full text-xs font-lato tracking-widest uppercase"
+                    className="px-4 py-2 bg-white text-[#1E2330] rounded-full text-xs tracking-widest uppercase"
                   >
-                    {uploading ? 'Uploading…' : 'Change'}
+                    {uploading ? 'Uploading...' : 'Change'}
                   </button>
                 </div>
                 {uploading && (
                   <div className="absolute inset-0 rounded-2xl bg-white/60 flex items-center justify-center">
-                    <p className="text-xs text-[#C4826A] font-lato tracking-widest uppercase">Uploading…</p>
+                    <p className="text-xs text-[#7C6E8A] tracking-widest uppercase">Uploading...</p>
                   </div>
                 )}
               </div>
@@ -207,10 +204,14 @@ export default function NewEventPage() {
               <button
                 type="button"
                 onClick={() => fileRef.current?.click()}
-                className="w-full h-36 border-2 border-dashed border-[#EDE0D6] rounded-2xl flex flex-col items-center justify-center gap-2 hover:border-[#C4826A] hover:bg-white transition-colors group"
+                className="w-full h-36 border-2 border-dashed border-[#E8EAF0] rounded-2xl flex flex-col items-center justify-center gap-2 hover:border-[#7C6E8A] hover:bg-white transition-colors group"
               >
-                <span className="text-2xl">🌸</span>
-                <span className="text-xs text-[#C4A090] group-hover:text-[#C4826A] font-lato tracking-widest uppercase transition-colors">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#9BA3B5" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="group-hover:stroke-[#7C6E8A] transition-colors">
+                  <rect x="3" y="3" width="18" height="18" rx="3" />
+                  <circle cx="8.5" cy="8.5" r="1.5" />
+                  <path d="m21 15-5-5L5 21" />
+                </svg>
+                <span className="text-xs text-[#9BA3B5] group-hover:text-[#7C6E8A] tracking-widest uppercase transition-colors">
                   Upload Photo
                 </span>
               </button>
@@ -223,19 +224,19 @@ export default function NewEventPage() {
               type="url"
               value={form.amazon_wishlist_url}
               onChange={(e) => set('amazon_wishlist_url', e.target.value)}
-              placeholder="https://amazon.com/hz/wishlist/…"
+              placeholder="https://amazon.com/hz/wishlist/..."
               className={inputClass}
             />
           </div>
 
-          {error && <p className="text-[#C4826A] text-sm font-lato">{error}</p>}
+          {error && <p className="text-[#C47A72] text-sm">{error}</p>}
 
           <button
             type="submit"
             disabled={loading || uploading}
-            className="w-full py-4 bg-[#C4826A] text-white rounded-full font-lato font-light tracking-widest text-sm uppercase hover:bg-[#A6614C] disabled:opacity-50 transition-colors mt-2"
+            className="w-full py-4 bg-[#1E2330] text-white rounded-full font-light tracking-widest text-sm uppercase hover:bg-[#3A3F50] disabled:opacity-50 transition-colors mt-2"
           >
-            {loading ? 'Creating…' : uploading ? 'Waiting for upload…' : 'Create Event'}
+            {loading ? 'Creating...' : uploading ? 'Waiting for upload...' : 'Create Event'}
           </button>
         </form>
       </main>

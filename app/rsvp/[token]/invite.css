@@ -3,7 +3,7 @@
 .invite-wrap {
   min-height: 100vh;
   min-height: 100dvh;
-  background: #ECECEF;
+  background: #E8EAF0;
   display: flex;
   justify-content: center;
 }
@@ -18,13 +18,13 @@
   overflow: hidden;
 
   --card: #fff;
-  --txt: #15161A;
-  --txt-2: #3A3B40;
-  --txt-muted: #6A6C73;
-  --txt-faint: #8C8E96;
-  --hair: #EAEBED;
+  --txt: #1E2330;
+  --txt-2: #3A3F50;
+  --txt-muted: #6B7A8D;
+  --txt-faint: #9BA3B5;
+  --hair: #E8EAF0;
   --field: #fff;
-  --field-bd: #E4E5E8;
+  --field-bd: #E8EAF0;
   --radius: 14px;
   --ease: cubic-bezier(0.22, 0.61, 0.36, 1);
 
@@ -75,7 +75,7 @@
 .invite-page .hero-fallback {
   width: 100%;
   height: 180px;
-  background: linear-gradient(180deg, var(--accent-soft, #E7F1EC) 0%, #fff 100%);
+  background: linear-gradient(180deg, var(--accent-soft, #E8EAF0) 0%, #fff 100%);
 }
 
 /* ---- Title block ---- */

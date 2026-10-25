@@ -18,10 +18,10 @@ function CopyLinkButton({ token }: { token: string }) {
   return (
     <button
       onClick={copy}
-      className="text-xs text-[#C4A090] hover:text-[#C4826A] transition-colors font-lato"
+      className="text-xs text-[#9BA3B5] hover:text-[#7C6E8A] transition-colors"
       title="Copy RSVP link"
     >
-      {copied ? '✓ Copied' : 'Copy link'}
+      {copied ? 'Copied' : 'Copy link'}
     </button>
   )
 }
@@ -34,10 +34,10 @@ const STATUS_LABEL: Record<RsvpStatus, string> = {
 }
 
 const STATUS_COLOR: Record<RsvpStatus, string> = {
-  pending: 'bg-[#F5F0EB] text-[#C4A090]',
-  attending: 'bg-[#EAF2EA] text-[#5A8C5A]',
-  not_attending: 'bg-[#FBF0EE] text-[#C4826A]',
-  maybe: 'bg-[#FBF6EE] text-[#C49A4A]',
+  pending: 'bg-[#E8EAF0] text-[#9BA3B5]',
+  attending: 'bg-[#E4EDE7] text-[#6D8B7A]',
+  not_attending: 'bg-[#F5EAEA] text-[#C47A72]',
+  maybe: 'bg-[#F5F0E0] text-[#B89B5A]',
 }
 
 function formatDateTime(dateStr: string, endTime?: string | null) {
@@ -133,27 +133,27 @@ export default function EventDetailPage({ params }: { params: Promise<{ id: stri
   const unsent = guests.filter((g) => !g.invite_sent_at)
 
   if (loading) return (
-    <div className="min-h-screen bg-[#FAF7F2] flex items-center justify-center">
-      <p className="font-[family-name:var(--font-playfair)] text-[#C4A090] italic">Loading…</p>
+    <div className="min-h-screen bg-[#F6F7F9] flex items-center justify-center">
+      <p className="font-[family-name:var(--font-display)] text-[#9BA3B5] italic">Loading...</p>
     </div>
   )
   if (!event) return (
-    <div className="min-h-screen bg-[#FAF7F2] flex items-center justify-center">
-      <p className="text-[#C4A090]">Event not found</p>
+    <div className="min-h-screen bg-[#F6F7F9] flex items-center justify-center">
+      <p className="text-[#9BA3B5]">Event not found</p>
     </div>
   )
 
   return (
-    <div className="min-h-screen bg-[#FAF7F2]">
-      <header className="bg-white/80 backdrop-blur border-b border-[#EDE0D6] px-8 py-5 flex items-center gap-3">
-        <Link href="/admin" className="text-[#C4A090] hover:text-[#C4826A] text-sm font-lato transition-colors">
-          ← Events
+    <div className="min-h-screen bg-[#F6F7F9]">
+      <header className="bg-white/80 backdrop-blur border-b border-[#E8EAF0] px-5 sm:px-8 py-4 sm:py-5 flex items-center gap-3">
+        <Link href="/admin" className="text-[#9BA3B5] hover:text-[#1E2330] text-sm transition-colors">
+          &larr; Events
         </Link>
-        <span className="text-[#EDE0D6]">/</span>
-        <span className="text-sm text-[#3D3530] font-lato truncate">{event.name}</span>
+        <span className="text-[#E8EAF0]">/</span>
+        <span className="text-sm text-[#1E2330] truncate">{event.name}</span>
       </header>
 
-      <main className="max-w-2xl mx-auto px-6 py-12 space-y-12">
+      <main className="max-w-2xl mx-auto px-5 sm:px-6 py-10 sm:py-12 space-y-12">
 
         {/* Event header */}
         <section>
@@ -164,32 +164,32 @@ export default function EventDetailPage({ params }: { params: Promise<{ id: stri
               className="w-full h-52 object-cover rounded-2xl mb-6"
             />
           )}
-          <p className="text-[#C4826A] tracking-[0.2em] text-xs uppercase mb-1">{event.location}</p>
-          <h2 className="font-[family-name:var(--font-playfair)] text-4xl text-[#3D3530]">{event.name}</h2>
-          <p className="text-[#C4A090] font-lato font-light mt-1">{formatDateTime(event.date, event.end_time)}</p>
+          <p className="text-[#7C6E8A] tracking-[0.2em] text-xs uppercase mb-1">{event.location}</p>
+          <h2 className="font-[family-name:var(--font-display)] text-3xl sm:text-4xl text-[#1E2330]">{event.name}</h2>
+          <p className="text-[#9BA3B5] font-light mt-1">{formatDateTime(event.date, event.end_time)}</p>
           {event.amazon_wishlist_url && (
             <a
               href={event.amazon_wishlist_url}
               target="_blank"
               rel="noopener noreferrer"
-              className="text-xs text-[#C4826A] hover:text-[#A6614C] tracking-widest uppercase mt-3 inline-block underline underline-offset-4"
+              className="text-xs text-[#7C6E8A] hover:text-[#5E4F6E] tracking-widest uppercase mt-3 inline-block underline underline-offset-4"
             >
-              View Wishlist →
+              View Wishlist &rarr;
             </a>
           )}
         </section>
 
         {/* RSVP stats */}
-        <section className="grid grid-cols-4 gap-3">
+        <section className="grid grid-cols-2 sm:grid-cols-4 gap-3">
           {[
-            { label: 'Attending', count: attending.length, bg: 'bg-[#EAF2EA]', text: 'text-[#5A8C5A]' },
-            { label: 'Maybe', count: maybe.length, bg: 'bg-[#FBF6EE]', text: 'text-[#C49A4A]' },
-            { label: 'Not Going', count: notAttending.length, bg: 'bg-[#FBF0EE]', text: 'text-[#C4826A]' },
-            { label: 'Pending', count: pending.length, bg: 'bg-[#F5F0EB]', text: 'text-[#C4A090]' },
+            { label: 'Attending', count: attending.length, bg: 'bg-[#E4EDE7]', text: 'text-[#6D8B7A]' },
+            { label: 'Maybe', count: maybe.length, bg: 'bg-[#F5F0E0]', text: 'text-[#B89B5A]' },
+            { label: 'Not Going', count: notAttending.length, bg: 'bg-[#F5EAEA]', text: 'text-[#C47A72]' },
+            { label: 'Pending', count: pending.length, bg: 'bg-[#E8EAF0]', text: 'text-[#9BA3B5]' },
           ].map((s) => (
             <div key={s.label} className={`rounded-2xl p-4 text-center ${s.bg}`}>
-              <p className={`text-3xl font-[family-name:var(--font-playfair)] ${s.text}`}>{s.count}</p>
-              <p className={`text-xs mt-1 font-lato tracking-wide ${s.text}`}>{s.label}</p>
+              <p className={`text-3xl font-[family-name:var(--font-display)] ${s.text}`}>{s.count}</p>
+              <p className={`text-xs mt-1 tracking-wide ${s.text}`}>{s.label}</p>
             </div>
           ))}
         </section>
@@ -199,68 +199,68 @@ export default function EventDetailPage({ params }: { params: Promise<{ id: stri
           <button
             onClick={sendInvites}
             disabled={sendingInvites || unsent.length === 0}
-            className="px-5 py-2.5 bg-[#C4826A] text-white rounded-full text-xs font-lato tracking-widest uppercase hover:bg-[#A6614C] disabled:opacity-40 transition-colors"
+            className="px-5 py-2.5 bg-[#1E2330] text-white rounded-full text-xs tracking-widest uppercase hover:bg-[#3A3F50] disabled:opacity-40 transition-colors"
           >
-            {sendingInvites ? 'Sending…' : `Send Invites (${unsent.length} unsent)`}
+            {sendingInvites ? 'Sending...' : `Send Invites (${unsent.length} unsent)`}
           </button>
           <button
             onClick={() => sendReminder('non_responders')}
             disabled={sendingReminder !== null || pending.length === 0}
-            className="px-5 py-2.5 bg-white border border-[#EDE0D6] text-[#6B6560] rounded-full text-xs font-lato tracking-widest uppercase hover:border-[#C4826A] hover:text-[#C4826A] disabled:opacity-40 transition-colors"
+            className="px-5 py-2.5 bg-white border border-[#E8EAF0] text-[#3A3F50] rounded-full text-xs tracking-widest uppercase hover:border-[#7C6E8A] hover:text-[#7C6E8A] disabled:opacity-40 transition-colors"
           >
-            {sendingReminder === 'non_responders' ? 'Sending…' : `Nudge Non-Responders (${pending.length})`}
+            {sendingReminder === 'non_responders' ? 'Sending...' : `Nudge Non-Responders (${pending.length})`}
           </button>
           <button
             onClick={() => sendReminder('attending')}
             disabled={sendingReminder !== null || attending.length === 0}
-            className="px-5 py-2.5 bg-white border border-[#EDE0D6] text-[#6B6560] rounded-full text-xs font-lato tracking-widest uppercase hover:border-[#C4826A] hover:text-[#C4826A] disabled:opacity-40 transition-colors"
+            className="px-5 py-2.5 bg-white border border-[#E8EAF0] text-[#3A3F50] rounded-full text-xs tracking-widest uppercase hover:border-[#7C6E8A] hover:text-[#7C6E8A] disabled:opacity-40 transition-colors"
           >
-            {sendingReminder === 'attending' ? 'Sending…' : `Remind Attendees (${attending.length})`}
+            {sendingReminder === 'attending' ? 'Sending...' : `Remind Attendees (${attending.length})`}
           </button>
         </section>
 
         {message && (
-          <p className="text-sm text-[#5A8C5A] bg-[#EAF2EA] px-5 py-3 rounded-xl font-lato">{message}</p>
+          <p className="text-sm text-[#6D8B7A] bg-[#E4EDE7] px-5 py-3 rounded-xl">{message}</p>
         )}
 
         {/* Add guests */}
         <section>
-          <p className="text-[#C4826A] tracking-[0.2em] text-xs uppercase mb-2">Add Guests</p>
-          <p className="text-xs text-[#C4A090] mb-3 font-lato">One per line — Name, Phone Number</p>
+          <p className="text-[#7C6E8A] tracking-[0.2em] text-xs uppercase mb-2">Add Guests</p>
+          <p className="text-xs text-[#9BA3B5] mb-3">One per line &mdash; Name, Phone Number</p>
           <textarea
             value={guestInput}
             onChange={(e) => setGuestInput(e.target.value)}
             placeholder={"Sarah Johnson, +15555550100\nEmily Davis, +15555550101"}
             rows={4}
-            className="w-full px-5 py-4 bg-white border border-[#EDE0D6] rounded-2xl text-[#3D3530] text-sm font-mono focus:outline-none focus:ring-2 focus:ring-[#C4826A]/20 focus:border-[#C4826A] transition-colors resize-none"
+            className="w-full px-5 py-4 bg-white border border-[#E8EAF0] rounded-2xl text-[#1E2330] text-sm font-mono focus:outline-none focus:ring-2 focus:ring-[#7C6E8A]/20 focus:border-[#7C6E8A] transition-colors resize-none"
           />
           <button
             onClick={addGuests}
             disabled={addingGuests || !guestInput.trim()}
-            className="mt-3 px-6 py-2.5 bg-[#C4826A] text-white rounded-full text-xs font-lato tracking-widest uppercase hover:bg-[#A6614C] disabled:opacity-40 transition-colors"
+            className="mt-3 px-6 py-2.5 bg-[#1E2330] text-white rounded-full text-xs tracking-widest uppercase hover:bg-[#3A3F50] disabled:opacity-40 transition-colors"
           >
-            {addingGuests ? 'Adding…' : 'Add Guests'}
+            {addingGuests ? 'Adding...' : 'Add Guests'}
           </button>
         </section>
 
         {/* Guest list */}
         {guests.length > 0 && (
           <section>
-            <p className="text-[#C4826A] tracking-[0.2em] text-xs uppercase mb-4">
-              Guest List <span className="text-[#C4A090]">({guests.length})</span>
+            <p className="text-[#7C6E8A] tracking-[0.2em] text-xs uppercase mb-4">
+              Guest List <span className="text-[#9BA3B5]">({guests.length})</span>
             </p>
-            <div className="bg-white border border-[#EDE0D6] rounded-2xl divide-y divide-[#F5EFE9]">
+            <div className="bg-white border border-[#E8EAF0] rounded-2xl divide-y divide-[#F0F1F4]">
               {guests.map((g) => (
-                <div key={g.id} className="flex items-center justify-between px-6 py-4">
-                  <div>
-                    <p className="font-[family-name:var(--font-playfair)] text-[#3D3530]">{g.name}</p>
-                    <p className="text-xs text-[#C4A090] font-lato mt-0.5">{g.phone}</p>
+                <div key={g.id} className="flex items-center justify-between px-5 sm:px-6 py-4">
+                  <div className="min-w-0 mr-3">
+                    <p className="font-[family-name:var(--font-display)] text-[#1E2330] truncate">{g.name}</p>
+                    <p className="text-xs text-[#9BA3B5] mt-0.5">{g.phone}</p>
                   </div>
-                  <div className="flex items-center gap-3">
+                  <div className="flex items-center gap-2 sm:gap-3 shrink-0">
                     {g.invite_sent_at && (
-                      <span className="text-xs text-[#C4A090] font-lato">Invited</span>
+                      <span className="text-xs text-[#9BA3B5]">Invited</span>
                     )}
-                    <span className={`text-xs px-3 py-1 rounded-full font-lato ${STATUS_COLOR[g.rsvp_status]}`}>
+                    <span className={`text-xs px-3 py-1 rounded-full ${STATUS_COLOR[g.rsvp_status]}`}>
                       {STATUS_LABEL[g.rsvp_status]}
                     </span>
                     <CopyLinkButton token={g.invite_token} />

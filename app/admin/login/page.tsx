@@ -56,12 +56,15 @@ export default function LoginPage() {
   }
 
   return (
-    <div className="min-h-screen bg-[#FAF7F2] flex items-center justify-center px-6">
+    <div className="min-h-screen bg-[#F6F7F9] flex items-center justify-center px-6">
       <div className="w-full max-w-sm text-center">
-        <p className="text-[#C4826A] tracking-[0.2em] text-xs uppercase font-lato mb-3">
+        <p className="text-[#7C6E8A] tracking-[0.2em] text-xs uppercase mb-3">
           {mode === 'login' ? 'Welcome back' : 'Get started'}
         </p>
-        <h1 className="font-[family-name:var(--font-playfair)] text-4xl text-[#3D3530] mb-10">Party Time</h1>
+        <h1 className="font-[family-name:var(--font-display)] text-4xl text-[#1E2330] mb-1">
+          party<span className="text-[#7C6E8A]">.</span>time
+        </h1>
+        <p className="text-sm text-[#9BA3B5] mb-10">Elegant event invitations</p>
 
         <form onSubmit={handleSubmit} className="space-y-4">
           <input
@@ -69,7 +72,7 @@ export default function LoginPage() {
             placeholder="Email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            className="w-full px-5 py-3.5 bg-white border border-[#E8C5B8] rounded-full text-[#3D3530] placeholder-[#C4A090] focus:outline-none focus:ring-2 focus:ring-[#C4826A]/30 text-center tracking-wide"
+            className="w-full px-5 py-3.5 bg-white border border-[#E8EAF0] rounded-full text-[#1E2330] placeholder-[#9BA3B5] focus:outline-none focus:ring-2 focus:ring-[#7C6E8A]/25 text-center tracking-wide"
             required
           />
           <input
@@ -77,16 +80,16 @@ export default function LoginPage() {
             placeholder="Password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            className="w-full px-5 py-3.5 bg-white border border-[#E8C5B8] rounded-full text-[#3D3530] placeholder-[#C4A090] focus:outline-none focus:ring-2 focus:ring-[#C4826A]/30 text-center tracking-widest"
+            className="w-full px-5 py-3.5 bg-white border border-[#E8EAF0] rounded-full text-[#1E2330] placeholder-[#9BA3B5] focus:outline-none focus:ring-2 focus:ring-[#7C6E8A]/25 text-center tracking-widest"
             required
             minLength={6}
           />
-          {error && <p className="text-[#C4826A] text-sm">{error}</p>}
-          {message && <p className="text-[#5A8C5A] text-sm">{message}</p>}
+          {error && <p className="text-[#C47A72] text-sm">{error}</p>}
+          {message && <p className="text-[#6D8B7A] text-sm">{message}</p>}
           <button
             type="submit"
             disabled={loading}
-            className="w-full py-3.5 bg-[#C4826A] text-white rounded-full font-lato font-light tracking-widest text-sm uppercase hover:bg-[#A6614C] disabled:opacity-50 transition-colors"
+            className="w-full py-3.5 bg-[#1E2330] text-white rounded-full font-light tracking-widest text-sm uppercase hover:bg-[#3A3F50] disabled:opacity-50 transition-colors"
           >
             {loading ? 'One moment...' : mode === 'login' ? 'Sign In' : 'Create Account'}
           </button>
@@ -94,7 +97,7 @@ export default function LoginPage() {
 
         <button
           onClick={() => { setMode(mode === 'login' ? 'signup' : 'login'); setError(''); setMessage('') }}
-          className="mt-6 text-xs text-[#C4A090] hover:text-[#C4826A] font-lato transition-colors"
+          className="mt-6 text-xs text-[#9BA3B5] hover:text-[#7C6E8A] transition-colors"
         >
           {mode === 'login' ? "Don't have an account? Sign up" : 'Already have an account? Sign in'}
         </button>

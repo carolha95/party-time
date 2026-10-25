@@ -374,7 +374,7 @@ export default function RsvpPage({ params }: { params: Promise<{ token: string }
         {/* Footer */}
         <Reveal className="foot">
           <span className="foot-mark">
-            PARTY<span style={{ color: accent }}>&middot;</span>TIME
+            party<span style={{ color: accent }}>&middot;</span>time
           </span>
         </Reveal>
       </div>

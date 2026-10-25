@@ -2,8 +2,7 @@
 
 import { useEffect, useState } from 'react'
 import Link from 'next/link'
-import { useRouter } from 'next/navigation'
-import { createClient } from '@/lib/supabase-browser'
+import { AdminHeader } from '@/components/admin-header'
 import type { Event } from '@/lib/supabase'
 
 function formatDate(dateStr: string) {
@@ -18,7 +17,6 @@ export default function AdminDashboard() {
   const [events, setEvents] = useState<Event[]>([])
   const [loading, setLoading] = useState(true)
   const [userName, setUserName] = useState('')
-  const router = useRouter()
 
   useEffect(() => {
     fetch('/api/auth')
@@ -31,50 +29,30 @@ export default function AdminDashboard() {
       .finally(() => setLoading(false))
   }, [])
 
-  async function logout() {
-    const supabase = createClient()
-    await supabase.auth.signOut()
-    router.push('/admin/login')
-    router.refresh()
-  }
-
   return (
-    <div className="min-h-screen bg-[#FAF7F2]">
-      <header className="bg-white/80 backdrop-blur border-b border-[#EDE0D6] px-8 py-5 flex items-center justify-between">
-        <h1 className="font-[family-name:var(--font-playfair)] text-2xl text-[#3D3530] tracking-wide">Party Time</h1>
-        <div className="flex items-center gap-5">
-          <Link href="/admin/users" className="text-xs text-[#C4A090] hover:text-[#C4826A] tracking-widest uppercase font-lato transition-colors">
-            Users
-          </Link>
-          {userName && (
-            <span className="text-xs text-[#C4A090] font-lato">{userName}</span>
-          )}
-          <button onClick={logout} className="text-xs text-[#C4826A] hover:text-[#A6614C] tracking-widest uppercase font-lato">
-            Sign out
-          </button>
-        </div>
-      </header>
+    <div className="min-h-screen bg-[#F6F7F9]">
+      <AdminHeader userName={userName} currentPage="events" />
 
-      <main className="max-w-2xl mx-auto px-6 py-14">
+      <main className="max-w-2xl mx-auto px-5 sm:px-6 py-10 sm:py-14">
         <div className="flex items-end justify-between mb-10">
           <div>
-            <p className="text-[#C4826A] tracking-[0.2em] text-xs uppercase mb-1">Your</p>
-            <h2 className="font-[family-name:var(--font-playfair)] text-4xl text-[#3D3530]">Events</h2>
+            <p className="text-[#7C6E8A] tracking-[0.2em] text-xs uppercase mb-1">Your</p>
+            <h2 className="font-[family-name:var(--font-display)] text-4xl text-[#1E2330]">Events</h2>
           </div>
           <Link
             href="/admin/events/new"
-            className="px-6 py-2.5 bg-[#C4826A] text-white rounded-full text-xs font-lato tracking-widest uppercase hover:bg-[#A6614C] transition-colors"
+            className="px-5 sm:px-6 py-2.5 bg-[#1E2330] text-white rounded-full text-xs tracking-widest uppercase hover:bg-[#3A3F50] transition-colors"
           >
             + New Event
           </Link>
         </div>
 
         {loading ? (
-          <p className="text-[#C4A090] text-center py-20 font-[family-name:var(--font-playfair)] italic">Loading...</p>
+          <p className="text-[#9BA3B5] text-center py-20 font-[family-name:var(--font-display)] italic">Loading...</p>
         ) : events.length === 0 ? (
           <div className="text-center py-24">
-            <p className="font-[family-name:var(--font-playfair)] text-2xl text-[#C4A090] italic mb-2">No events yet</p>
-            <p className="text-sm text-[#C4A090]">Create your first event to get started</p>
+            <p className="font-[family-name:var(--font-display)] text-2xl text-[#9BA3B5] italic mb-2">No events yet</p>
+            <p className="text-sm text-[#9BA3B5]">Create your first event to get started</p>
           </div>
         ) : (
           <ul className="space-y-4">
@@ -82,17 +60,17 @@ export default function AdminDashboard() {
               <li key={event.id}>
                 <Link
                   href={`/admin/events/${event.id}`}
-                  className="group flex items-center justify-between bg-white border border-[#EDE0D6] rounded-2xl px-7 py-5 hover:border-[#C4826A] hover:shadow-sm transition-all"
+                  className="group flex items-center justify-between bg-white border border-[#E8EAF0] rounded-2xl px-6 sm:px-7 py-5 hover:border-[#7C6E8A] hover:shadow-sm transition-all"
                 >
-                  <div>
-                    <p className="font-[family-name:var(--font-playfair)] text-lg text-[#3D3530] group-hover:text-[#C4826A] transition-colors">
+                  <div className="min-w-0 mr-3">
+                    <p className="font-[family-name:var(--font-display)] text-lg text-[#1E2330] group-hover:text-[#7C6E8A] transition-colors">
                       {event.name}
                     </p>
-                    <p className="text-sm text-[#C4A090] mt-0.5 font-lato font-light">
-                      {formatDate(event.date)} · {event.location}
+                    <p className="text-sm text-[#9BA3B5] mt-0.5 font-light truncate">
+                      {formatDate(event.date)} &middot; {event.location}
                     </p>
                   </div>
-                  <span className="text-[#E8C5B8] group-hover:text-[#C4826A] transition-colors text-lg">&rarr;</span>
+                  <span className="text-[#C5CDD8] group-hover:text-[#7C6E8A] transition-colors text-lg shrink-0">&rarr;</span>
                 </Link>
               </li>
             ))}

@@ -1,26 +1,34 @@
 @import "tailwindcss";
 
 :root {
-  --background: #FAF7F2;
-  --foreground: #3D3530;
+  --background: #F6F7F9;
+  --foreground: #1E2330;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-lato);
-  --font-serif: var(--font-playfair);
-  --color-cream: #FAF7F2;
-  --color-blush: #E8C5B8;
-  --color-rose: #C4826A;
-  --color-rose-dark: #A6614C;
-  --color-sage: #8A9E8C;
-  --color-warm-gray: #6B6560;
-  --color-warm-dark: #3D3530;
+  --font-sans: var(--font-sans);
+  --font-serif: var(--font-display);
+  --color-snow: #F6F7F9;
+  --color-mist: #E8EAF0;
+  --color-slate: #9BA3B5;
+  --color-ink: #1E2330;
+  --color-ink-2: #3A3F50;
+  --color-plum: #7C6E8A;
+  --color-plum-dark: #5E4F6E;
+  --color-steel: #6B7A8D;
+  --color-ice: #C5CDD8;
+  --color-sage: #6D8B7A;
+  --color-sage-soft: #E4EDE7;
+  --color-coral: #C47A72;
+  --color-coral-soft: #F5EAEA;
+  --color-amber: #B89B5A;
+  --color-amber-soft: #F5F0E0;
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: var(--font-lato), 'Lato', sans-serif;
+  font-family: var(--font-sans), 'DM Sans', system-ui, sans-serif;
 }
