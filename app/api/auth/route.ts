@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server'
 import { createServerSupabase } from '@/lib/supabase-auth'
+import { supabaseAdmin } from '@/lib/supabase'
 
 export async function GET() {
   const supabase = await createServerSupabase()
@@ -9,7 +10,8 @@ export async function GET() {
     return NextResponse.json({ error: 'Not authenticated' }, { status: 401 })
   }
 
-  const { data: profile } = await supabase
+  const db = supabaseAdmin()
+  const { data: profile } = await db
     .from('profiles')
     .select('role, display_name')
     .eq('id', user.id)
