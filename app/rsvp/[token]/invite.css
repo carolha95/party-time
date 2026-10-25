@@ -467,8 +467,9 @@
 }
 
 .invite-page .foot-mark {
-  font-size: 13px;
-  font-weight: 800;
-  letter-spacing: 0.18em;
+  font-family: var(--font-script), cursive;
+  font-size: 20px;
+  font-weight: 400;
+  letter-spacing: 0.02em;
   color: var(--txt-faint);
 }

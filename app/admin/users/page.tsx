@@ -102,7 +102,7 @@ export default function UsersPage() {
         <div className="flex items-end justify-between mb-10">
           <div>
             <p className="text-[#7C6E8A] tracking-[0.2em] text-xs uppercase mb-1">Manage</p>
-            <h2 className="font-[family-name:var(--font-display)] text-4xl text-[#1E2330]">Users</h2>
+            <h2 className="font-[family-name:var(--font-display)] font-bold text-4xl text-[#1E2330]">Users</h2>
           </div>
           <button
             onClick={() => { setShowForm(!showForm); setError('') }}
@@ -175,15 +175,15 @@ export default function UsersPage() {
         )}
 
         {loading ? (
-          <p className="text-[#9BA3B5] text-center py-20 font-[family-name:var(--font-display)] italic">Loading...</p>
+          <p className="text-[#9BA3B5] text-center py-20 font-[family-name:var(--font-display)] font-bold italic">Loading...</p>
         ) : users.length === 0 ? (
-          <p className="text-center py-24 font-[family-name:var(--font-display)] text-2xl text-[#9BA3B5] italic">No users yet</p>
+          <p className="text-center py-24 font-[family-name:var(--font-display)] font-bold text-2xl text-[#9BA3B5] italic">No users yet</p>
         ) : (
           <div className="bg-white border border-[#E8EAF0] rounded-2xl divide-y divide-[#F0F1F4]">
             {users.map((user) => (
               <div key={user.id} className="flex items-center justify-between px-5 sm:px-6 py-4 sm:py-5">
                 <div className="min-w-0 mr-3">
-                  <p className="font-[family-name:var(--font-display)] text-[#1E2330] truncate">{user.display_name}</p>
+                  <p className="font-[family-name:var(--font-display)] font-bold text-[#1E2330] truncate">{user.display_name}</p>
                   <p className="text-xs text-[#9BA3B5] mt-0.5 truncate">{user.email}</p>
                 </div>
                 <div className="flex items-center gap-2 sm:gap-3 shrink-0">

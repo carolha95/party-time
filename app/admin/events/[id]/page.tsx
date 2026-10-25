@@ -134,7 +134,7 @@ export default function EventDetailPage({ params }: { params: Promise<{ id: stri
 
   if (loading) return (
     <div className="min-h-screen bg-[#F6F7F9] flex items-center justify-center">
-      <p className="font-[family-name:var(--font-display)] text-[#9BA3B5] italic">Loading...</p>
+      <p className="font-[family-name:var(--font-display)] font-bold text-[#9BA3B5] italic">Loading...</p>
     </div>
   )
   if (!event) return (
@@ -165,7 +165,7 @@ export default function EventDetailPage({ params }: { params: Promise<{ id: stri
             />
           )}
           <p className="text-[#7C6E8A] tracking-[0.2em] text-xs uppercase mb-1">{event.location}</p>
-          <h2 className="font-[family-name:var(--font-display)] text-3xl sm:text-4xl text-[#1E2330]">{event.name}</h2>
+          <h2 className="font-[family-name:var(--font-display)] font-bold text-3xl sm:text-4xl text-[#1E2330]">{event.name}</h2>
           <p className="text-[#9BA3B5] font-light mt-1">{formatDateTime(event.date, event.end_time)}</p>
           {event.amazon_wishlist_url && (
             <a
@@ -188,7 +188,7 @@ export default function EventDetailPage({ params }: { params: Promise<{ id: stri
             { label: 'Pending', count: pending.length, bg: 'bg-[#E8EAF0]', text: 'text-[#9BA3B5]' },
           ].map((s) => (
             <div key={s.label} className={`rounded-2xl p-4 text-center ${s.bg}`}>
-              <p className={`text-3xl font-[family-name:var(--font-display)] ${s.text}`}>{s.count}</p>
+              <p className={`text-3xl font-[family-name:var(--font-display)] font-bold ${s.text}`}>{s.count}</p>
               <p className={`text-xs mt-1 tracking-wide ${s.text}`}>{s.label}</p>
             </div>
           ))}
@@ -253,7 +253,7 @@ export default function EventDetailPage({ params }: { params: Promise<{ id: stri
               {guests.map((g) => (
                 <div key={g.id} className="flex items-center justify-between px-5 sm:px-6 py-4">
                   <div className="min-w-0 mr-3">
-                    <p className="font-[family-name:var(--font-display)] text-[#1E2330] truncate">{g.name}</p>
+                    <p className="font-[family-name:var(--font-display)] font-bold text-[#1E2330] truncate">{g.name}</p>
                     <p className="text-xs text-[#9BA3B5] mt-0.5">{g.phone}</p>
                   </div>
                   <div className="flex items-center gap-2 sm:gap-3 shrink-0">

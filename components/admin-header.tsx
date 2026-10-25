@@ -5,7 +5,7 @@ import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { createClient } from '@/lib/supabase-browser'
 
-export function AdminHeader({ userName, currentPage }: { userName?: string; currentPage?: string }) {
+export function AdminHeader({ currentPage }: { currentPage?: string }) {
   const [menuOpen, setMenuOpen] = useState(false)
   const router = useRouter()
 
@@ -19,7 +19,7 @@ export function AdminHeader({ userName, currentPage }: { userName?: string; curr
   return (
     <header className="bg-white/80 backdrop-blur border-b border-[#E8EAF0] px-5 sm:px-8 py-4 sm:py-5">
       <div className="flex items-center justify-between">
-        <Link href="/admin" className="font-[family-name:var(--font-display)] text-xl text-[#1E2330] tracking-tight">
+        <Link href="/admin" className="font-[family-name:var(--font-script)] text-2xl text-[#1E2330]">
           party<span className="text-[#7C6E8A]">.</span>time
         </Link>
 
@@ -37,9 +37,6 @@ export function AdminHeader({ userName, currentPage }: { userName?: string; curr
           >
             Users
           </Link>
-          {userName && (
-            <span className="text-xs text-[#9BA3B5]">{userName}</span>
-          )}
           <button onClick={logout} className="text-xs text-[#7C6E8A] hover:text-[#5E4F6E] tracking-widest uppercase transition-colors">
             Sign out
           </button>
@@ -59,9 +56,6 @@ export function AdminHeader({ userName, currentPage }: { userName?: string; curr
       {/* Mobile menu */}
       {menuOpen && (
         <nav className="sm:hidden pt-4 pb-2 space-y-3 border-t border-[#E8EAF0] mt-4">
-          {userName && (
-            <p className="text-xs text-[#9BA3B5] pb-1">{userName}</p>
-          )}
           <Link
             href="/admin"
             className="block text-sm text-[#1E2330] hover:text-[#7C6E8A] transition-colors"

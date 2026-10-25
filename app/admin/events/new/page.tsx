@@ -101,7 +101,7 @@ export default function NewEventPage() {
 
       <main className="max-w-lg mx-auto px-5 sm:px-6 py-10 sm:py-14">
         <p className="text-[#7C6E8A] tracking-[0.2em] text-xs uppercase mb-2">Plan something beautiful</p>
-        <h2 className="font-[family-name:var(--font-display)] text-4xl text-[#1E2330] mb-10">New Event</h2>
+        <h2 className="font-[family-name:var(--font-display)] font-bold text-4xl text-[#1E2330] mb-10">New Event</h2>
 
         <form onSubmit={handleSubmit} className="space-y-6">
           <div>

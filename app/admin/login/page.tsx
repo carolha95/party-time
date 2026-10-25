@@ -61,10 +61,10 @@ export default function LoginPage() {
         <p className="text-[#7C6E8A] tracking-[0.2em] text-xs uppercase mb-3">
           {mode === 'login' ? 'Welcome back' : 'Get started'}
         </p>
-        <h1 className="font-[family-name:var(--font-display)] text-4xl text-[#1E2330] mb-1">
+        <h1 className="font-[family-name:var(--font-script)] text-5xl text-[#1E2330] mb-1">
           party<span className="text-[#7C6E8A]">.</span>time
         </h1>
-        <p className="text-sm text-[#9BA3B5] mb-10">Elegant event invitations</p>
+        <div className="mb-10" />
 
         <form onSubmit={handleSubmit} className="space-y-4">
           <input
