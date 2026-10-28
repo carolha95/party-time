@@ -60,6 +60,7 @@ export default function EventDetailPage({ params }: { params: Promise<{ id: stri
   const [loading, setLoading] = useState(true)
   const [guestInput, setGuestInput] = useState('')
   const [addingGuests, setAddingGuests] = useState(false)
+  const [consentChecked, setConsentChecked] = useState(false)
   const [sendingInvites, setSendingInvites] = useState(false)
   const [sendingReminder, setSendingReminder] = useState<string | null>(null)
   const [message, setMessage] = useState('')
@@ -234,9 +235,20 @@ export default function EventDetailPage({ params }: { params: Promise<{ id: stri
             rows={4}
             className="w-full px-5 py-4 bg-white border border-[#E8EAF0] rounded-2xl text-[#1E2330] text-sm font-mono focus:outline-none focus:ring-2 focus:ring-[#7C6E8A]/20 focus:border-[#7C6E8A] transition-colors resize-none"
           />
+          <label className="flex items-start gap-2.5 mt-4 cursor-pointer">
+            <input
+              type="checkbox"
+              checked={consentChecked}
+              onChange={(e) => setConsentChecked(e.target.checked)}
+              className="mt-0.5 accent-[#7C6E8A]"
+            />
+            <span className="text-xs text-[#9BA3B5] leading-relaxed">
+              I confirm that each guest listed above has given their consent to receive event-related text messages from Party Time. Message and data rates may apply. Guests can reply STOP to opt out at any time.
+            </span>
+          </label>
           <button
             onClick={addGuests}
-            disabled={addingGuests || !guestInput.trim()}
+            disabled={addingGuests || !guestInput.trim() || !consentChecked}
             className="mt-3 px-6 py-2.5 bg-[#1E2330] text-white rounded-full text-xs tracking-widest uppercase hover:bg-[#3A3F50] disabled:opacity-40 transition-colors"
           >
             {addingGuests ? 'Adding...' : 'Add Guests'}
